@@ -1,11 +1,13 @@
 package io.github.fruit22.delivery.core.domain.model.courier;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 import java.util.Objects;
 import java.util.UUID;
 
 @Getter
+@EqualsAndHashCode(of = "id")
 public class StoragePlace {
 
     private final UUID id;
@@ -43,18 +45,6 @@ public class StoragePlace {
 
     public boolean isOccupied() {
         return orderId != null;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-        StoragePlace that = (StoragePlace) o;
-        return Objects.equals(id, that.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(id);
     }
 
 }

@@ -9,9 +9,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class StoragePlaceTest {
 
-    private StoragePlace storagePlace;
     private final String TEST_NAME = "Test Storage";
     private final int TEST_VOLUME = 100;
+    private StoragePlace storagePlace;
 
     @BeforeEach
     void setUp() {
