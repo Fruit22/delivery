@@ -32,9 +32,8 @@ public class Courier {
         this.storagePlaces.add(new StoragePlace("BAG", 10));
     }
 
-    public void addStoragePlace(StoragePlace storagePlace) {
-        Objects.requireNonNull(storagePlace, "Storage place cannot be null");
-        this.storagePlaces.add(storagePlace);
+    public void addStoragePlace(String name, int volume) {
+        this.storagePlaces.add(new StoragePlace(name, volume));
     }
 
     public boolean canTakeOrder(Order order) {

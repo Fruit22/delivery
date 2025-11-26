@@ -41,12 +41,11 @@ class CourierTest {
     void addStoragePlace_WithValidStoragePlace_AddedToList() {
         Courier courier = new Courier("John", 10, new Location(1, 1));
 
-        StoragePlace extra = new StoragePlace("backpack", 20);
-        courier.addStoragePlace(extra);
+        courier.addStoragePlace("backpack", 20);
 
-        assertTrue(
-                courier.getStoragePlaces().contains(extra)
-        );
+        var volume = courier.getStoragePlaces().stream().map(StoragePlace::getTotalVolume).reduce(0, Integer::sum);
+
+        assertEquals(30, volume);
     }
 
     @Test
@@ -54,7 +53,7 @@ class CourierTest {
         Courier courier = new Courier("John", 10, new Location(1, 1));
 
         assertThrows(NullPointerException.class,
-                () -> courier.addStoragePlace(null));
+                () -> courier.addStoragePlace(null, 10));
     }
 
     @Test
@@ -98,9 +97,7 @@ class CourierTest {
     @Test
     void takeOrder_WhenNoSpaceAvailable_ThrowsException() {
         Courier courier = new Courier("John", 10, new Location(1, 1));
-        courier.addStoragePlace(new StoragePlace("backpack", 20));
-
-        Order huge = new Order(UUID.randomUUID(), new Location(1, 1), 31);
+        Order huge = new Order(UUID.randomUUID(), new Location(1, 1), 11);
 
         assertThrows(IllegalStateException.class,
                 () -> courier.takeOrder(huge));
