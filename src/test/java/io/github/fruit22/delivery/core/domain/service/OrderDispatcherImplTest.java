@@ -3,6 +3,7 @@ package io.github.fruit22.delivery.core.domain.service;
 import io.github.fruit22.delivery.core.domain.model.Location;
 import io.github.fruit22.delivery.core.domain.model.courier.Courier;
 import io.github.fruit22.delivery.core.domain.model.order.Order;
+import io.github.fruit22.delivery.core.domain.model.order.OrderStatus;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -46,7 +47,13 @@ class OrderDispatcherImplTest {
 
         Optional<Courier> result = dispatcher.dispatch(order, List.of(c1, c2, c3));
 
-        assertTrue(result.isPresent());
-        assertEquals(c2, result.get());
+        assertAll(
+                () -> assertTrue(result.isPresent()),
+                () -> assertEquals(c2, result.get()),
+                () -> assertEquals(c2.getId(), order.getCourierId()),
+                () -> assertEquals(OrderStatus.ASSIGNED, order.getStatus()),
+                () -> assertTrue(c2.getStoragePlaces().getFirst().isOccupied())
+        );
+
     }
 }
