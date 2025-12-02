@@ -19,6 +19,13 @@ public class OrderDispatcherImpl implements OrderDispatcher {
         }
         return couriers.stream()
                 .filter(courier -> courier.canTakeOrder(order))
-                .min(Comparator.comparingDouble(courier -> courier.calculateTimeToLocation(order.getLocation())));
+                .min(Comparator.comparingDouble(courier -> courier.calculateTimeToLocation(order.getLocation())))
+                .map(courier -> {
+                    courier.takeOrder(order);
+                    order.assign(courier.getId());
+                    return courier;
+                })
+                ;
+
     }
 }
