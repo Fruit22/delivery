@@ -2,23 +2,37 @@ package io.github.fruit22.delivery.core.domain.model.courier;
 
 import io.github.fruit22.delivery.core.domain.model.Location;
 import io.github.fruit22.delivery.core.domain.model.order.Order;
+import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
+@Entity
 @Getter
 @EqualsAndHashCode(of = "id")
+@NoArgsConstructor(access = AccessLevel.PROTECTED, force = true)
 public class Courier {
 
+    @Id
+    @Column(name = "id", nullable = false, updatable = false)
     private final UUID id;
+
+    @Column(name = "name", nullable = false)
     private final String name;
+
+    @Column(name = "speed", nullable = false)
     private final int speed;
 
+    @OneToMany(mappedBy = "courier", cascade = CascadeType.ALL, orphanRemoval = true)
     private final List<StoragePlace> storagePlaces = new ArrayList<>();
+
+    @Embedded
     private Location location;
 
     public Courier(String name, int speed, Location location) {
