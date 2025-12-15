@@ -1,19 +1,36 @@
 package io.github.fruit22.delivery.core.domain.model.courier;
 
+import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.Objects;
 import java.util.UUID;
 
+@Entity
 @Getter
 @EqualsAndHashCode(of = "id")
+@NoArgsConstructor(access = AccessLevel.PROTECTED, force = true)
 public class StoragePlace {
 
+    @Id
+    @Column(name = "id", unique = true, nullable = false)
     private final UUID id;
+
+    @Column(name = "name", nullable = false)
     private final String name;
+
+    @Column(name = "totalVolume", nullable = false)
     private final int totalVolume;
+
+    @Column(name = "orderId")
     private UUID orderId;
+
+    @ManyToOne
+    @JoinColumn(name = "courier_id")
+    private Courier courier;
 
     public StoragePlace(String name, int totalVolume) {
         this.id = UUID.randomUUID();

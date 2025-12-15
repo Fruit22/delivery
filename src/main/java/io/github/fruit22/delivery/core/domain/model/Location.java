@@ -1,6 +1,11 @@
 package io.github.fruit22.delivery.core.domain.model;
 
-public record Location(int x, int y) {
+import jakarta.persistence.Column;
+import jakarta.persistence.Embeddable;
+
+@Embeddable
+public record Location(@Column(name = "location_x") int x,
+                       @Column(name = "location_y") int y) {
 
     private static final int MIN_COORDINATE_VALUE = 1;
     private static final int MAX_COORDINATE_VALUE = 10;
