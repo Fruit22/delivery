@@ -57,9 +57,11 @@ class OrderRepositoryImplTest extends BasePostgresContainerTest {
         assertTrue(loadedOrder.isEmpty());
 
         Order order = new Order(UUID.randomUUID(), new Location(6, 6), 1);
-        order.assign(UUID.randomUUID());
+        var courierId = UUID.randomUUID();
+        order.assign(courierId);
         orderRepository.add(order);
         loadedOrder = orderRepository.getAssigned();
         assertFalse(loadedOrder.isEmpty());
+        assertEquals(courierId, loadedOrder.get(0).getCourierId());
     }
 }
